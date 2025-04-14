@@ -47,7 +47,6 @@ def upload_file():
 @app.route('/<filename>')
 def ler_docx(filename):
     caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-
     texto_extraido = ler_arquivo_docx(caminho)
 
     ficheiros_upload = []
@@ -60,31 +59,25 @@ def ler_docx(filename):
 
 @app.route('/upload-rel-final/<filename>')
 def apresentar_rel(filename):
-    try:
-        caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        conteudo = ler_arquivo_docx(caminho)
+    caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    conteudo = ler_arquivo_docx(caminho)
         
-        payload = {
-            "model": "Prototipo",
-            "prompt": conteudo,
-            "stream": False
-        }
+    payload = {
+        "model": "Prototipo",
+        "prompt": conteudo,
+        "stream": False
+    }
         
-        response = requests.post(OLLAMA_URL, headers=OLLAMA_HEADERS, json=payload)
-        response.raise_for_status()
-        
-        resposta = json.loads(response.text)["response"]
+    response = requests.post(OLLAMA_URL, headers=OLLAMA_HEADERS, json=payload)
+    resposta = json.loads(response.text)["response"]
 
-        ficheiros = []
+    ficheiros_upload = []
+    for ficheiro in os.listdir(app.config['UPLOAD_FOLDER']):
+        if docx_ou_nao(ficheiro):
+            ficheiros_upload.append(ficheiro)
 
-        for ficheiro in os.listdir(app.config['UPLOAD_FOLDER']):
-            if docx_ou_nao(ficheiro):
-                return render_template("index.html", files=ficheiros, content=resposta, filename=filename)
-    
-    except Exception as e:
-        error_msg = f"Erro ao processar o arquivo: {str(e)}"
-        ficheiros = [f for f in os.listdir(app.config['UPLOAD_FOLDER']) if docx_ou_nao(f)]
-        return render_template("index.html", files=ficheiros, content=error_msg)
+    return render_template("index.html", files=ficheiros_upload, content=resposta, filename=filename)
+
 
 @app.route('/favicon.ico')
 def favicon():
