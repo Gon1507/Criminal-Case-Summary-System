@@ -38,6 +38,16 @@
             color: #666;
             overflow-y: auto;
         }
+
+        .conteudo-ficheiro {
+            background: #f4f4f4;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 
@@ -65,12 +75,14 @@
                 <h2>Ficheiros:</h2>
                 <ul class="list-group">
                     {% for file in files %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ file }}
-                        {% if file.endswith('.docx') or file.endswith('.doc') or file.endswith('.pdf') %}
-                        <div>
-                            <a href="{{ url_for('main.read_file', filename=file) }}" class="btn btn-info btn-sm">Ler</a>
-                            <a href="{{ url_for('main.show_summary', filename=file) }}" class="btn btn-success btn-sm">Resumir</a>
+                    <li class="list-group-item d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <strong>{{ file }}</strong>
+                        </div>
+
+                        {% if conteudos and file in conteudos %}
+                        <div class="conteudo-ficheiro">
+                            {{ conteudos[file] }}
                         </div>
                         {% endif %}
                     </li>
@@ -80,17 +92,6 @@
                 </ul>
             </div>
         </div>
-
-        {% if content %}
-        <div class="card mt-4">
-            <div class="card-body">
-                <h2>Conteúdo do ficheiro: "{{ filename }}":</h2>
-                <pre style="white-space: pre-wrap; background: #f4f4f4; padding: 10px; border: 1px solid #ccc; 
-                           width: 100%; height: 500px; overflow: auto;">{{ content }}
-                </pre>
-            </div>
-        </div>
-        {% endif %}
 
         {% if respostas %}
         <div class="card mt-4">

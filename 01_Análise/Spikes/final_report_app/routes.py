@@ -23,6 +23,7 @@ def upload_file():
 
     #Vai guardar todos os resumos de cada ficheiro
     respostas = {}
+    conteudos = {}
 
     for file in files:
         if file and manager.validator.is_valid(file.filename):
@@ -50,7 +51,13 @@ def upload_file():
 
     ficheiros = manager.show_valid_files()
 
-    return render_template('index.html', files=ficheiros, respostas=respostas)
+    #adicionada esta parte de codigo para se conseguir ler os ficheiros para por
+    #automaticamente no site quando se faz upload
+    conteudos = {}
+    for file in ficheiros:
+        conteudos[file] = manager.read_content(file)
+
+    return render_template('index.html', files=ficheiros, respostas=respostas, conteudos=conteudos)
 
 #Abrir uma caixinha com o texto todo do ficheiro.
 #Com a ajuda do metodo show_valid_files() do Manager.
