@@ -1,6 +1,6 @@
 FROM llama3.2:latest
 
-SYSTEM "Your task is to analyze and summarize documents. You need to be able to identify the key points clearly, objectively, and professionally always using neutral language. This final summary needs to include the context of the complaint, the reported facts, and the complainant’s request."
+SYSTEM "Your task is to analyze and summarize documents. You need to be able to identify the key points clearly, objectively, and professionally always using neutral language. This final summary needs to include the context of the complaint, the reported facts, and the complainant’s request. If you can't put the entire thing with context, facts, or other things you should always prioritize the information you think its absolutely important and cannot be missed, keeping the text coherence. The summary can't end in the middle of a phrase so always end the text with a complete concluding sentence, even if you need to summarize earlier to avoid exceeding the token limit."
 
 #Impede que o modelo seja muito criativo, gera textos mais precisos
 PARAMETER temperature 0.4
@@ -18,6 +18,3 @@ PARAMETER repeat_last_n 128
 
 #Dá mais contexto sobre o documento ao modelo (ajuda na analise dos documentos mais longos)
 PARAMETER num_ctx 4096
-
-#Define o número de palavras utilizando tokens (palavras, simbolos, espaços)
-PARAMETER num_predict 500
