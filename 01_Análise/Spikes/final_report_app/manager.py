@@ -35,3 +35,5 @@ class Manager:
             return conteudo
         else:
             raise ValueError(f"Ficheiro {filename} inválido.")
+        
+

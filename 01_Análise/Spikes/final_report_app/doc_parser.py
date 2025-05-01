@@ -3,7 +3,6 @@ import fitz  #Bibloteca conversão PDF.
 
 class DocParser:
     def convert_file2content(self, file_path):
-
         #Converte ficheiros .DOCX .DOC E .PDF para texto.
         if file_path.lower().endswith(('.docx', '.doc')):
             return self._read_doc(file_path)
@@ -26,3 +25,4 @@ class DocParser:
             texto_extraido += pagina.get_text()
         documento.close()
         return texto_extraido
+    

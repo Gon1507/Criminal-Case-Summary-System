@@ -32,6 +32,7 @@ def upload_file():
 
             #Ler o conteúdo do ficheiro
             conteudo = manager.read_content(file.filename)
+            conteudos[file.filename] = conteudo
 
             #Fazer as ceninhas do ollama
             payload = {
@@ -51,40 +52,7 @@ def upload_file():
 
     ficheiros = manager.show_valid_files()
 
-    #adicionada esta parte de codigo para se conseguir ler os ficheiros para por
-    #automaticamente no site quando se faz upload
-    conteudos = {}
-    for file in ficheiros:
-        conteudos[file] = manager.read_content(file)
-
     return render_template('index.html', files=ficheiros, respostas=respostas, conteudos=conteudos)
-
-#Abrir uma caixinha com o texto todo do ficheiro.
-#Com a ajuda do metodo show_valid_files() do Manager.
-@bp.route('/<filename>')
-def read_file(filename):
-    manager = current_app.config['MANAGER']
-    texto_extraido = manager.read_content(filename)
-    ficheiros = manager.show_valid_files()
-    return render_template('index.html', files=ficheiros, content=texto_extraido, filename=filename)
-
-#Mandar o conteudo do ficheiro para o model do ollama para ser resumido.
-@bp.route('/upload-rel-final/<filename>')
-def show_summary(filename):
-    manager = current_app.config['MANAGER']
-    conteudo = manager.read_content(filename)
-
-    payload = {
-        "model": "Prototipo",
-        "prompt": conteudo,
-        "stream": False
-    }
-
-    response = requests.post(OLLAMA_URL, headers=OLLAMA_HEADERS, json=payload)
-    resposta = json.loads(response.text)["response"]
-
-    ficheiros = manager.show_valid_files()
-    return render_template('index.html', files=ficheiros, content=resposta, filename=filename)
 
 @bp.route('/favicon.ico')
 def favicon():
