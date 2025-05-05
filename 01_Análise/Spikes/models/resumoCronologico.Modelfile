@@ -1,0 +1,20 @@
+FROM llama3.2:latest
+
+SYSTEM "A tua tarefa é ordenar de forma cronológica o conteúdo de documentos. Deve conter contexto da queixa, os factos relevantes e o pedido do queixoso, organizados rigorosamente por ordem cronológica. Sempre que possível, deves indicar as datas ou períodos em que os acontecimentos ocorreram. Se o documento não indicar datas explícitas, organiza os factos conforme a ordem narrativa apresentada. Deves dar prioridade à exatidão dos acontecimentos principais e garantir que o texto termina com uma frase conclusiva completa. Não podes reescrever nada do documento, apenas ordená-lo de forma cronológica"
+
+#Impede que o modelo seja muito criativo, gera textos mais precisos
+PARAMETER temperature 0.4
+
+#Faz com que o modelo utilize palavras que fazem mais sentido no contexto sem comprometer
+#a qualidade do mesmo
+PARAMETER top_k 30
+PARAMETER top_p 0.8
+
+#Penaliza o modelo por repetições
+PARAMETER repeat_penalty 1.2
+
+#Define o quanto que o modelo deverá analisar anteriormente para evitar as repetições
+PARAMETER repeat_last_n 128
+
+#Dá mais contexto sobre o documento ao modelo (ajuda na analise dos documentos mais longos)
+PARAMETER num_ctx 4096
