@@ -3,6 +3,7 @@ import json
 import requests
 from flask import render_template, request, redirect, url_for, Blueprint, current_app
 from cop_LLM.cop_llm import CopLLM
+from cop_LLM.cop_chronologic import CopChronologic
 
 bp = Blueprint('main', __name__)
 
@@ -36,10 +37,12 @@ def upload_file():
             for nome_ficheiro, conteudo in conteudos.items():
                 respostas[nome_ficheiro] = cop_instance.process_file(conteudo)
 
+            cop_chron = CopChronologic()
+            resposta_chron =cop_chron.process_file(respostas)
 
     ficheiros = manager.show_valid_files()
 
-    return render_template('index.html', files=ficheiros, respostas=respostas, conteudos=conteudos)
+    return render_template('index.html', files=ficheiros, respostas=respostas, conteudos=conteudos, chron = resposta_chron)
 
 @bp.route('/favicon.ico')
 def favicon():
