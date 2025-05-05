@@ -2,9 +2,7 @@ import os
 import json
 import requests
 from flask import render_template, request, redirect, url_for, Blueprint, current_app
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_HEADERS = {"Content-Type": "application/json"}
+from cop_LLM.cop_llm import CopLLM
 
 bp = Blueprint('main', __name__)
 
@@ -34,21 +32,10 @@ def upload_file():
             conteudo = manager.read_content(file.filename)
             conteudos[file.filename] = conteudo
 
-            #Fazer as ceninhas do ollama
-            payload = {
-                "model": "Prototipo",
-                "prompt": conteudo,
-                "stream": False
-            }
+            cop_instance = CopLLM()
+            for nome_ficheiro, conteudo in conteudos.items():
+                respostas[nome_ficheiro] = cop_instance.process_file(conteudo)
 
-            response = requests.post(OLLAMA_URL, headers=OLLAMA_HEADERS, json=payload)
-            resposta_json = response.json()
-
-            #Ver se funcionou ou se deu erro
-            if "response" in resposta_json:
-                respostas[file.filename] = resposta_json["response"]
-            else:
-                respostas[file.filename] = f"Erro do modelo: {resposta_json.get('error', 'Erro desconhecido')}"
 
     ficheiros = manager.show_valid_files()
 
