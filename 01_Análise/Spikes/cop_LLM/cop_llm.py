@@ -4,7 +4,7 @@ from .llm import LLM
 class CopLLM(): 
     def process_file(self, content):
             payload = {
-                "model": "Prototipo",
+                "model": "ResumoGeral",
                 "prompt": content,
                 "stream": False
             }
