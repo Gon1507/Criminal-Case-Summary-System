@@ -1,7 +1,7 @@
 import os
 from flask import render_template, request, redirect, url_for, Blueprint, current_app
-from cop_LLM.cop_llm import CopLLM
-from cop_LLM.cop_chronologic import CopChronologic
+from .cop_llm import CopLLM
+from .cop_chronologic import CopChronologic
 
 bp = Blueprint('main', __name__)
 
