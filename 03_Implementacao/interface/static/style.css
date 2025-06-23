@@ -1,0 +1,139 @@
+:root {
+    --azul-pj: #002b45;
+    --azul-hover: #001f33;
+    --cinza-claro: #e9ecef;
+    --cinza: #6c757d;
+    --branco: #ffffff;
+    --dourado: #b59f3b;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--cinza-claro);
+    color: #212529;
+}
+
+.navbar {
+    background-color: var(--azul-pj);
+}
+
+.navbar-brand {
+    color: var(--branco);
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.navbar-brand:hover {
+    color: var(--dourado);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--azul-pj);
+}
+
+.btn-pj {
+    background-color: var(--azul-pj);
+    color: var(--branco);
+    border: none;
+}
+
+.btn-pj:hover {
+    background-color: var(--azul-hover);
+}
+
+.btn-warning {
+    background-color: var(--dourado);
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #a88f33;
+}
+
+.panel-pj,
+.scroll-box {
+    background-color: var(--branco);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.scroll-box {
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: monospace;
+    max-height: 80vh;
+}
+
+.ficheiro-card {
+    width: 120px;
+    background-color: var(--branco);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.ficheiro-card:hover {
+    background-color: #f1f1f1;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-5 {
+    margin-bottom: 3rem;
+}
+
+body {
+    margin: 0;
+    background: #f8f9fa;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.wrapper {
+    padding: 2rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.scroll-box {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .5rem;
+    padding: 1.25rem;
+    flex: 1;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: monospace;
+}
+
+footer {
+    background-color: var(--azul-pj);
+    color: var(--branco);
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 4rem;
+}
