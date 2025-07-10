@@ -39,8 +39,8 @@ class ManagerLLM:
         return respostas
       
     #Método que permite gerir o Cop_Chronologic 
-    def process_files_llm_chron(self, respostas):
+    def process_files_llm_chron(self, exemplos, respostas):
         #O mesmo irá receber os resumos individuais e vai
         #juntá-los todos num documento apenas, este de
         #forma cronológica
-        return self.cop_chron.process_file(respostas) 
+        return self.cop_chron.process_file(exemplos, respostas) 

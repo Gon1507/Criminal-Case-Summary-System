@@ -16,11 +16,13 @@ def create_app():
     #Configuração da app criada.
     #Pasta onde os ficheiros vão ficar guardados.
     app.config['UPLOAD_FOLDER'] = 'uploads/ficheiros'
+    app.config['EXAMPLES_FOLDER'] = 'uploads/exemplos'
     #Utilização da função limpar_uploads, para, ao reiniciar a aplicação
     #todos os ficheiros que existam anteriormente sejam removidos
     limpar_uploads.limpar_uploads(app.config['UPLOAD_FOLDER'])
+    limpar_uploads.limpar_uploads(app.config['EXAMPLES_FOLDER'])
     #Inicialização de um Manager com o caminho da pasta de uploads.
-    app.config['MANAGER'] = Manager(upload_folder=app.config['UPLOAD_FOLDER'])
+    app.config['MANAGER'] = Manager(upload_folder=app.config['UPLOAD_FOLDER'], example_folder=app.config['EXAMPLES_FOLDER'])
     app.config['LLM_MANAGER'] = ManagerLLM()
 
     #Importação e associação de um blueprint à aplicação.

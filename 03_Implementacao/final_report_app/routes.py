@@ -9,7 +9,7 @@ bp = Blueprint('main', __name__)
 def index():
     manager = current_app.config['MANAGER']
     #Irá procurar a lista de ficheiros válidos
-    ficheiros = manager.show_valid_files()
+    ficheiros = manager.show_valid_files(manager.upload_folder)
     #Os resumos individuais provenientes do Cop_LLM
     respostas = current_app.config.get('RESPOSTAS', None)
     #Os resumo final proveniente do Cop_Chronologic
@@ -39,10 +39,10 @@ def generate_results_llm():
     manager = current_app.config['MANAGER']
     llm_manager = current_app.config['LLM_MANAGER']
 
-    ficheiros = manager.show_valid_files()
+    ficheiros = manager.show_valid_files(manager.upload_folder)
     #Para cada um dos ficheiros inseridos na aplicação
     #os mesmos irão ser lidos
-    conteudos = {f: manager.read_content(f) for f in ficheiros}
+    conteudos = {f: manager.read_content(f, manager.upload_folder) for f in ficheiros}
 
     #De seguida, com a ajuda do manager de llms, é feito, logo
     #após carregar no botão de gerar resposta, o processamento
@@ -54,18 +54,38 @@ def generate_results_llm():
 
     return redirect(url_for('main.index'))
 
+@bp.route('/upload_examples', methods=['POST'])
+def upload_examples():
+    manager = current_app.config['MANAGER']
+    #Irá receber a lista de ficheiros inseridos pelo utilizador
+    exemplos = request.files.getlist('examples[]')
+    
+    for ex in exemplos:
+        #E, para cada um dos ficheiros irá verificar a sua validação
+        if ex and manager.validator.is_valid(ex.filename):
+            print("OLA")
+            #E se os mesmos forem válidos, serão guardados numa pasta uploads
+            path = os.path.join(manager.example_folder, ex.filename)
+            ex.save(path)
+            
+    return redirect(url_for("main.index"))
+
 #Gera o resumo cronológico final a partir dos resumos individuais
 @bp.route('/generate_final_report', methods=['POST'])
 def generate_final_report():
     llm_manager = current_app.config['LLM_MANAGER']
     respostas = current_app.config.get('RESPOSTAS', {})
+    manager = current_app.config['MANAGER']
 
     #Depois de se clicar no botão de gerar um relatório final,
     #o processamento vai buscar o dicionario de respostas anteriormente
     #gerado e envia tudo para o modelo CopChronologic para depois
     #se conseguir juntar tudo num documento e ordená-lo de forma
     #cronológica
-    resumo_cronologico = llm_manager.process_files_llm_chron(respostas)
+    exemplos = manager.show_valid_files(manager.example_folder)
+    conteudo_exemplos = {f: manager.read_content(f, manager.example_folder) for f in exemplos}
+    
+    resumo_cronologico = llm_manager.process_files_llm_chron(conteudo_exemplos, respostas)
 
     #Guarda o resumo num dicionario
     current_app.config['CHRON'] = resumo_cronologico
@@ -77,7 +97,7 @@ def generate_final_report():
 def ver_ficheiro(filename):
     manager = current_app.config['MANAGER']
     #Lê-se o conteúdo original de um ficheiro já formatado
-    conteudo = manager.read_content(filename)
+    conteudo = manager.read_content(filename, manager.upload_folder)
     #E redireciona para uma página nova
     return render_template('ficheiro.html', filename=filename, conteudo=conteudo)
 
