@@ -105,20 +105,6 @@ h4 {
     margin-bottom: 3rem;
 }
 
-body {
-    margin: 0;
-    background: #f8f9fa;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.wrapper {
-    padding: 2rem;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
 .scroll-box {
     background: #fff;
     border: 1px solid #dee2e6;

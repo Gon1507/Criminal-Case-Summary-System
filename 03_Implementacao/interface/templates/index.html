@@ -5,81 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processos Crime</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="bg-light text-dark py-4">
 
-<div class="container py-5">
+<div class="container">
     <div class="text-center mb-4">
-        <h1 class="fw-bold">Processamento de Processos Crime</h1>
+        <h1 class="fw-semibold mb-0">Processamento de Processos Crime</h1>
     </div>
 
-    <div class="text-center mb-5">
+    <div class="text-center mb-4">
         <form action="{{ url_for('main.upload_file') }}" method="POST" enctype="multipart/form-data" class="d-flex flex-column align-items-center gap-3">
-            <input type="file" class="form-control w-50" name="files[]" multiple required>
-            <button type="submit" class="btn btn-primary px-4">Enviar Ficheiros</button>
+            <input type="file" name="files[]" multiple required class="form-control w-50">
+            <button type="submit" class="btn btn-dark">Enviar Ficheiros</button>
         </form>
     </div>
-
-    <div class="mb-4">
-    <h3 class="h5 text-center">Ficheiros Carregados</h3>
-
-    <div class="d-flex justify-content-center">
-        <div class="d-flex flex-wrap gap-3 mt-3 justify-content-center">
-            {% if files %}
-                {% for file in files|sort %}
-                    <a href="{{ url_for('main.ver_ficheiro', filename=file) }}" class="text-decoration-none" target="_blank">
-                        <div class="text-center border rounded p-3 shadow-sm bg-light" style="width: 120px;">
-                            <div style="font-size: 2em;">📄</div>
-                            <div class="small mt-2">{{ file }}</div>
-                        </div>
-                    </a>
-                {% endfor %}
-            {% else %}
-                <p class="text-muted">Nenhum ficheiro disponível.</p>
-            {% endif %}
-        </div>
-    </div>
-</div>
 
     {% if files %}
-    <div class="text-center mt-4">
+    <div class="text-center mb-4">
         <form action="{{ url_for('main.generate_results_llm') }}" method="POST">
-            <button type="submit" class="btn btn-warning btn-lg">Gerar Respostas</button>
+            <button type="submit" class="btn btn-secondary">Gerar Respostas</button>
         </form>
     </div>
     {% endif %}
 
-    {% if respostas %}
-
-<div class="mt-4 mb-4">
-    <h3 class="h5 text-center">Respostas Geradas</h3>
-
-    <div class="d-flex justify-content-center">
-        <div class="d-flex flex-wrap gap-3 mt-3 justify-content-center">
-            {% for filename in respostas.keys()|sort %}
-                <a href="{{ url_for('main.ver_resposta', filename=filename) }}" class="text-decoration-none" target="_blank">
-                    <div class="text-center border rounded p-3 shadow-sm bg-light" style="width: 120px;">
-                        <div style="font-size: 2em;">💬</div>
-                        <div class="small mt-2">{{ filename }}</div>
+    <div class="row g-4">
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header text-center fw-bold">
+                    Ficheiros Carregados
+                </div>
+                <div class="card-body overflow-auto" style="max-height:400px;">
+                    {% if files %}
+                    <div class="d-flex flex-column gap-2">
+                        {% for file in files|sort %}
+                        <a href="{{ url_for('main.ver_ficheiro', filename=file) }}" target="_blank" class="text-decoration-none text-dark">
+                            <div class="border rounded p-2 bg-white shadow-sm hover-bg-light">
+                                <div class="fw-bold small">
+                                    {% if '\n' in file %}
+                                        {{ file.split('\n')[0] }}
+                                    {% else %}
+                                        {{ file }}
+                                    {% endif %}
+                                </div>
+                                {% if '\n' in file %}
+                                <div class="text-muted small">
+                                    {{ file.split('\n')[1] }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                        {% endfor %}
                     </div>
-                </a>
-            {% endfor %}
+                    {% else %}
+                    <p class="text-muted mb-0">Nenhum ficheiro disponível.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header text-center fw-bold">
+                    Respostas Geradas
+                </div>
+                <div class="card-body overflow-auto" style="max-height:400px;">
+                    {% if respostas %}
+                    <div class="d-flex flex-column gap-2">
+                        {% for filename in respostas.keys()|sort %}
+                        <a href="{{ url_for('main.ver_resposta', filename=filename) }}" target="_blank" class="text-decoration-none text-dark">
+                            <div class="border rounded p-2 bg-white shadow-sm hover-bg-light">
+                                <div class="fw-bold small">
+                                    {% if '\n' in filename %}
+                                        {{ filename.split('\n')[0] }}
+                                    {% else %}
+                                        {{ filename }}
+                                    {% endif %}
+                                </div>
+                                {% if '\n' in filename %}
+                                <div class="text-muted small">
+                                    {{ filename.split('\n')[1] }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">Nenhuma resposta ainda.</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
-</div>
-{% endif %}
 
     {% if respostas %}
-    <div class="text-center mt-4">
+    <div class="text-center mt-5">
         <form action="{{ url_for('main.generate_final_report') }}" method="POST" target="_blank">
-            <button type="submit" class="btn btn-success btn-lg">Gerar Relatório Final</button>
+            <button type="submit" class="btn btn-dark">Gerar Relatório Final</button>
         </form>
     </div>
     {% endif %}
-
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

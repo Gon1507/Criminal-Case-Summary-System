@@ -1,4 +1,4 @@
-import docx2txt #Biblioteca conversão DOCX/DOC.
+import docx2txt #Biblioteca conversão DOCX.
 import fitz  #Bibloteca conversão PDF.
 
 class DocParser:

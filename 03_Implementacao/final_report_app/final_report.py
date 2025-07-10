@@ -15,7 +15,7 @@ def create_app():
 
     #Configuração da app criada.
     #Pasta onde os ficheiros vão ficar guardados.
-    app.config['UPLOAD_FOLDER'] = '03_Implementacao/uploads/'
+    app.config['UPLOAD_FOLDER'] = 'uploads/ficheiros'
     #Utilização da função limpar_uploads, para, ao reiniciar a aplicação
     #todos os ficheiros que existam anteriormente sejam removidos
     limpar_uploads.limpar_uploads(app.config['UPLOAD_FOLDER'])

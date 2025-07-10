@@ -137,7 +137,7 @@ def download_word():
     resposta = current_app.config.get('CHRON', None)
 
     #A paste de testes para onde os downloads serão enviados
-    pasta_relatorios = os.path.abspath('04_Teste')
+    pasta_relatorios = os.path.abspath('uploads/relatorios_finais')
     if not os.path.exists(pasta_relatorios):
         os.makedirs(pasta_relatorios)
 

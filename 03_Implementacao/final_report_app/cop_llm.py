@@ -6,11 +6,11 @@ from .llm import LLM
 #que será introduzido na aplicação
 
 class CopLLM(LLM): 
-    def process_file(self, content):
+    def process_file(self, content, modelo):
 
             #Dados a serem enviados no modelo
             payload = {
-                "model": "ResumoGeral",
+                "model": modelo,
                 "prompt": content,
                 "stream": False
             }

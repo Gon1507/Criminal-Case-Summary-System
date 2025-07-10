@@ -10,14 +10,31 @@ class ManagerLLM:
         
     #Método que permite gerir o Cop_LLM
     def process_files_llm(self, conteudos):
-        #Onde irá receber um dicionario
         respostas = {}
-        
-        #E para cada ficheiro inserido, usa o modelo Cop_LLM
-        #Para resumir e gerar cada uma das suas respostas individualmente
-        for nome_ficheiro, conteudo in conteudos.items():
-            respostas[nome_ficheiro] = self.cop_llm.process_file(conteudo)
-        
+
+        for filename, conteudo in conteudos.items():
+            nome_ficheiro = filename.lower()
+
+            if "capa" in nome_ficheiro:
+                modelo = "capaModelo"
+            elif "cota" in nome_ficheiro:
+                modelo = "cotaModelo"
+            elif "inquirição" in nome_ficheiro:
+                modelo = "inquiricaoModelo"
+            elif "termo" in nome_ficheiro:
+                modelo = "termoJuntadaModelo"
+            elif "notificação" in nome_ficheiro:
+                modelo = "notificacaoModelo"
+            elif "informação" in nome_ficheiro:
+                modelo = "informacaoModelo"
+            else:
+                modelo = "modeloGenerico"
+
+            print(f"[INFO] Modelo selecionado para {filename}: {modelo}")
+
+            resposta = self.cop_llm.process_file(conteudo, modelo)
+            respostas[filename] = resposta
+            
         #Devolvendo posteriormente o dicionario com as respostas geradas 
         return respostas
       
@@ -27,5 +44,3 @@ class ManagerLLM:
         #juntá-los todos num documento apenas, este de
         #forma cronológica
         return self.cop_chron.process_file(respostas) 
-        
-        

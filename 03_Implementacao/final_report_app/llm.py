@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 
 class LLM(ABC):
     #URL do servidor Ollama
-    OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
+    OLLAMA_URL = "http://localhost:11434/api/generate"
     #Cabeçalho HTTP
     OLLAMA_HEADERS = {"Content-Type": "application/json"}
     
