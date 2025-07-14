@@ -17,17 +17,17 @@ class ManagerLLM:
             nome_ficheiro = filename.lower()
 
             if "capa" in nome_ficheiro:
-                modelo = "capaModelo"
+                modelo = "ModeloCapa"
             elif "cota" in nome_ficheiro:
-                modelo = "cotaModelo"
+                modelo = "ModeloCota"
             elif "inquirição" in nome_ficheiro:
-                modelo = "inquiricaoModelo"
+                modelo = "ModeloInquiricao"
             elif "termo" in nome_ficheiro:
-                modelo = "termoJuntadaModelo"
+                modelo = "ModeloTermoJuntada"
             elif "notificação" in nome_ficheiro:
-                modelo = "notificacaoModelo"
+                modelo = "ModeloNotificacao"
             elif "informação" in nome_ficheiro:
-                modelo = "informacaoModelo"
+                modelo = "ModeloInformacao"
             else:
                 modelo = None
 

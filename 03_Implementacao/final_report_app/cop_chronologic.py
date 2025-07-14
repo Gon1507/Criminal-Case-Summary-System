@@ -34,7 +34,7 @@ class CopChronologic(LLM):
 
         #Dados a serem enviados no modelo
         payload = {
-            "model": "ResumoCronologico",
+            "model": "ModeloResumoCronologico",
             "prompt": prompt,
             "stream": False
         }
