@@ -21,6 +21,7 @@ def create_app():
     #todos os ficheiros que existam anteriormente sejam removidos
     limpar_uploads.limpar_uploads(app.config['UPLOAD_FOLDER'])
     limpar_uploads.limpar_uploads(app.config['EXAMPLES_FOLDER'])
+    limpar_uploads.limpar_uploads("uploads/relatorios_finais")
     #Inicialização de um Manager com o caminho da pasta de uploads.
     app.config['MANAGER'] = Manager(upload_folder=app.config['UPLOAD_FOLDER'], example_folder=app.config['EXAMPLES_FOLDER'])
     app.config['LLM_MANAGER'] = ManagerLLM()

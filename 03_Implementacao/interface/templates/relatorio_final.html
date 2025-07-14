@@ -22,7 +22,7 @@
     <div class="d-flex justify-content-center gap-3">
       <button type="submit" class="btn btn-dark">Guardar Alterações</button>
       <a href="{{ url_for('main.download_word') }}" class="btn btn-secondary">Download Word</a>
-      <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">Voltar</a>
+      <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary" onclick="window.close()">Voltar</a>
     </div>
   </form>
 </div>

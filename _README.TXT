@@ -5,13 +5,7 @@ Este repositório contém uma aplicação web desenvolvida em Flask para apoio a
 ## Pré-requisitos
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [Ollama](https://ollama.com/) instalado com os modelos:
-  - `ResumoGeral`
-  - `ResumoCronologico`
-
-Na pasta uploads, irá encontrar ambos os modelos e, a partir daí, irá conseguir criá-los com o commando ollama.
--ollama create -f caminho_para_o_modelo_geral ResumoGeral
--ollama create -f caminho_para_o_modelo_cronologico ResumoCronologico
+- [Ollama](https://ollama.com/)
 
 Por fim, dentro da pasta 03_Implementacao, terá de abrir o cmd e executar os seguintes comandos:
 -docker build -t sistema-resumos-processos-crime .

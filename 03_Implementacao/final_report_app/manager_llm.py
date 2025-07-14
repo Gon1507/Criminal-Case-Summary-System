@@ -11,6 +11,7 @@ class ManagerLLM:
     #Método que permite gerir o Cop_LLM
     def process_files_llm(self, conteudos):
         respostas = {}
+        erros = []
 
         for filename, conteudo in conteudos.items():
             nome_ficheiro = filename.lower()
@@ -28,12 +29,15 @@ class ManagerLLM:
             elif "informação" in nome_ficheiro:
                 modelo = "informacaoModelo"
             else:
-                modelo = "modeloGenerico"
+                modelo = None
 
             print(f"[INFO] Modelo selecionado para {filename}: {modelo}")
-
-            resposta = self.cop_llm.process_file(conteudo, modelo)
-            respostas[filename] = resposta
+            
+            if modelo:
+                resposta = self.cop_llm.process_file(conteudo, modelo)
+                respostas[filename] = resposta
+            else:
+                erros.append(filename)
             
         #Devolvendo posteriormente o dicionario com as respostas geradas 
         return respostas

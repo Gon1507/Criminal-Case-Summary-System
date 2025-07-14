@@ -1,5 +1,5 @@
 import os
-from flask import render_template, request, redirect, url_for, Blueprint, current_app, make_response
+from flask import flash, render_template, request, redirect, url_for, Blueprint, current_app, make_response
 from docx import Document
 
 bp = Blueprint('main', __name__)
@@ -14,8 +14,10 @@ def index():
     respostas = current_app.config.get('RESPOSTAS', None)
     #Os resumo final proveniente do Cop_Chronologic
     chron = current_app.config.get('CHRON', None)
+    
+    exemplo = request.args.get('exemplo', False)
 
-    return render_template('index.html', files=ficheiros, respostas=respostas, chron=chron)
+    return render_template('index.html', files=ficheiros, respostas=respostas, chron=chron, exemplo=exemplo)
 
 #Upload de ficheiros pelo utilizador utilizando o método POST de um formulário
 @bp.route('/upload_files', methods=['POST'])
@@ -68,7 +70,7 @@ def upload_examples():
             path = os.path.join(manager.example_folder, ex.filename)
             ex.save(path)
             
-    return redirect(url_for("main.index"))
+    return redirect(url_for("main.index", exemplo=True))
 
 #Gera o resumo cronológico final a partir dos resumos individuais
 @bp.route('/generate_final_report', methods=['POST'])
