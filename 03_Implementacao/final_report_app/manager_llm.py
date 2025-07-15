@@ -8,7 +8,8 @@ class ManagerLLM:
         self.cop_llm = CopLLM()
         self.cop_chron = CopChronologic()
         
-    #Método que permite gerir o Cop_LLM
+    #Método que permite gerir o Cop_LLM para gerir qual
+    #dos agentes criados é associado a cada tipo de ficheiro inserido
     def process_files_llm(self, conteudos):
         respostas = {}
         erros = []

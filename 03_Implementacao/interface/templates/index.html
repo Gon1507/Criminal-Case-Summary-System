@@ -52,25 +52,12 @@
                         {% for file in files|sort %}
                         <a href="{{ url_for('main.ver_ficheiro', filename=file) }}" target="_blank" class="text-decoration-none text-dark">
                             <div class="border rounded p-2 bg-white shadow-sm hover-bg-light">
-                                <div class="fw-bold small">
-                                    {% if '\n' in file %}
-                                        {{ file.split('\n')[0] }}
-                                    {% else %}
-                                        {{ file }}
-                                    {% endif %}
-                                </div>
-                                {% if '\n' in file %}
-                                <div class="text-muted small">
-                                    {{ file.split('\n')[1] }}
-                                </div>
-                                {% endif %}
+                                <div class="fw-bold small">{{ file }}</div>
                             </div>
                         </a>
                         {% endfor %}
                     </div>
-                    {% else %}
-                    <p class="text-muted mb-0">Nenhum ficheiro disponível.</p>
-                    {% endif %}
+                    {% else %}<p class="text-muted mb-0">Nenhum ficheiro disponível.</p>{% endif %}
                 </div>
             </div>
         </div>
@@ -87,24 +74,13 @@
                         <a href="{{ url_for('main.ver_resposta', filename=filename) }}" target="_blank" class="text-decoration-none text-dark">
                             <div class="border rounded p-2 bg-white shadow-sm hover-bg-light">
                                 <div class="fw-bold small">
-                                    {% if '\n' in filename %}
-                                        {{ filename.split('\n')[0] }}
-                                    {% else %}
                                         {{ filename }}
-                                    {% endif %}
                                 </div>
-                                {% if '\n' in filename %}
-                                <div class="text-muted small">
-                                    {{ filename.split('\n')[1] }}
-                                </div>
-                                {% endif %}
                             </div>
                         </a>
                         {% endfor %}
                     </div>
-                    {% else %}
-                    <p class="text-muted mb-0">Nenhuma resposta ainda.</p>
-                    {% endif %}
+                    {% else %}<p class="text-muted mb-0">Nenhuma resposta ainda.</p>{% endif %}
                 </div>
             </div>
         </div>

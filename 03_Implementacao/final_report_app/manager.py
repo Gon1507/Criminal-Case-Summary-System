@@ -22,8 +22,8 @@ class Manager:
 
     #Método que vai retornar ficheiros válidos.
     def show_valid_files(self, folder):
-        #Percorre todos os ficheiros na pasta de upload e vai retornar
-        #apenas aqueles que vão válidos, ou seja acabam com .docx, .doc ou .pdf
+        #Percorre todos os ficheiros na pasta e vai retornar
+        #apenas aqueles que vão válidos, ou seja acabam com .docx ou .pdf
         ficheiros = os.listdir(folder)
         validos = [f for f in ficheiros if self.validator.is_valid(f)]
         return validos

@@ -5,13 +5,10 @@ from final_report_app.delete_uploads import DeleteUploads
 import os
 
 def create_app():
-        
     limpar_uploads = DeleteUploads()
 
     #Inicialização da aplicação Flask na localização da pasta de templates.
-    app = Flask(__name__, 
-            template_folder=os.path.join('..', 'interface', 'templates'), 
-            static_folder=os.path.join('..', 'interface', 'static'))
+    app = Flask(__name__, template_folder=os.path.join('..', 'interface', 'templates'), static_folder=os.path.join('..', 'interface', 'static'))
 
     #Configuração da app criada.
     #Pasta onde os ficheiros vão ficar guardados.

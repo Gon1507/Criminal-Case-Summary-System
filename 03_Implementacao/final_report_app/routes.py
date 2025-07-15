@@ -1,5 +1,5 @@
 import os
-from flask import flash, render_template, request, redirect, url_for, Blueprint, current_app, make_response
+from flask import render_template, request, redirect, url_for, Blueprint, current_app, make_response
 from docx import Document
 
 bp = Blueprint('main', __name__)
@@ -42,8 +42,9 @@ def generate_results_llm():
     llm_manager = current_app.config['LLM_MANAGER']
 
     ficheiros = manager.show_valid_files(manager.upload_folder)
+    
     #Para cada um dos ficheiros inseridos na aplicação
-    #os mesmos irão ser lidos
+    #os mesmos irão ser lidos e extraidos
     conteudos = {f: manager.read_content(f, manager.upload_folder) for f in ficheiros}
 
     #De seguida, com a ajuda do manager de llms, é feito, logo
@@ -65,7 +66,6 @@ def upload_examples():
     for ex in exemplos:
         #E, para cada um dos ficheiros irá verificar a sua validação
         if ex and manager.validator.is_valid(ex.filename):
-            print("OLA")
             #E se os mesmos forem válidos, serão guardados numa pasta uploads
             path = os.path.join(manager.example_folder, ex.filename)
             ex.save(path)
@@ -81,7 +81,8 @@ def generate_final_report():
 
     #Depois de se clicar no botão de gerar um relatório final,
     #o processamento vai buscar o dicionario de respostas anteriormente
-    #gerado e envia tudo para o modelo CopChronologic para depois
+    #gerado, com exemplos ou nao dos relatorios finais reais, e envia 
+    # tudo para o modelo CopChronologic para depois
     #se conseguir juntar tudo num documento e ordená-lo de forma
     #cronológica
     exemplos = manager.show_valid_files(manager.example_folder)
@@ -144,13 +145,6 @@ def editar_chron():
         current_app.config['CHRON'] = nova_resposta
     
     return redirect(url_for('main.ver_chron'))
-
-#Visualiza o resumo cronológico final
-@bp.route('/ver_chron')
-def ver_chron():
-    #A possibilidade de se visualizar o resumo final gerado
-    resposta = current_app.config.get('CHRON', '')
-    return render_template('relatorio_final.html', resposta=resposta, filename='relatorio_final')
 
 #Faz download do resumo cronológico em formato .docx
 @bp.route('/download_word')
