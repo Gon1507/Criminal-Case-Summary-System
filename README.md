@@ -21,7 +21,7 @@ Everything runs locally through [Ollama](https://ollama.com/) with the Gemma 3 m
 
 ## Architecture
 
-![Class diagram](02_Desenho/arquitetura.jpg)
+![Class diagram](02_Design/arquitetura.jpg)
 
 The `final_report_app` package contains the application logic, them being the routes, file parsing and validation, LLM managers. The `interface` package contains the templates and static files. The agents are defined as Ollama Modelfiles in `03_Implementacao/models`.
 
