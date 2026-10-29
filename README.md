@@ -54,12 +54,19 @@ To run with Flask debug mode (local development only), add `-e FLASK_DEBUG=1` to
 ## Repository structure
 
 ```
-00_Planning/         Project planning
-01_Analysis/Spikes/  Early prototypes and experiments
-02_Design/           Design (class diagram)
-03_Implementation/   Source code, Modelfiles and Dockerfile
-04_Report/           Full project report (in Portuguese)
+criminalcasereports/
+├── 00_Planning/           Project planning
+├── 01_Analysis/
+│   └── Spikes/            Early prototypes and experiments
+├── 02_Design/
+│   ├── arquitetura.png    Design, class diagram
+│   └── screenshots/
+├── 03_Implementation/     Source code, Modelfiles and Dockerfile
+├── 04_Report/ 
+│   ├── _REPORT.pdf        Full project report (in Portuguese)
+└── README.md
 ```
+
 
 ## Notes
 
