@@ -1,6 +1,7 @@
 import os
 from flask import render_template, request, redirect, url_for, Blueprint, current_app, make_response
 from docx import Document
+from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
 
@@ -30,7 +31,7 @@ def upload_file():
         #E, para cada um dos ficheiros irá verificar a sua validação
         if file and manager.validator.is_valid(file.filename):
             #E se os mesmos forem válidos, serão guardados numa pasta uploads
-            path = os.path.join(manager.upload_folder, file.filename)
+            path = os.path.join(manager.upload_folder, secure_filename(file.filename))
             file.save(path)
             
     return redirect(url_for("main.index"))
@@ -67,7 +68,7 @@ def upload_examples():
         #E, para cada um dos ficheiros irá verificar a sua validação
         if ex and manager.validator.is_valid(ex.filename):
             #E se os mesmos forem válidos, serão guardados numa pasta uploads
-            path = os.path.join(manager.example_folder, ex.filename)
+            path = os.path.join(manager.example_folder, secure_filename(ex.filename))
             ex.save(path)
             
     return redirect(url_for("main.index", exemplo=True))
